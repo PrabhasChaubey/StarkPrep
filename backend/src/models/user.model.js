@@ -43,6 +43,31 @@ const userSchema = new Schema({
         type: String, // image URL (optional)
         default: '',
     },
+    
+    profileStats: {
+        codeforces: {
+            verified: { type: Boolean, default: false },
+            handle: { type: String, default: "" },
+            totalContests: Number,
+            rating: Number,
+            maxRating: Number,
+            problemsSolved: Number,
+            problemTags: [String],
+        },
+    leetcode: {
+        verified: { type: Boolean, default: false },
+        username: { type: String, default: "" },
+        totalProblemsSolved: Number,
+        contestRating: Number,
+        attendedContestsCount: Number,
+        submissionStats: {
+            easy: Number,
+            medium: Number,
+            hard: Number,
+            },
+        }   
+    }
+
 }, {
   timestamps: true,
 });

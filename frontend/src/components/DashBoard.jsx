@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function DashBoard() {
   return (
@@ -10,7 +11,7 @@ function DashBoard() {
             </div >
 
             <div className='text-white font-semibold text-xl my-2'>
-                <button className='hover:text-amber-300'>Event Tracker </button> | 
+                <button className='hover:text-amber-300'><Link to="/contest-tracker">Event Tracker</Link> </button> | 
                 <button className='hover:text-amber-300 '>
                     Profile Tracker
                 </button>
