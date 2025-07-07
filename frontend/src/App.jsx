@@ -1,15 +1,16 @@
-import Header from './components/Header.jsx'
 import Landing from './pages/Landing.jsx'
-import DashBoard from './components/DashBoard.jsx'
 import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
+import { Routes,Route } from 'react-router-dom'
 
 function App() {
   
   return (
-    <>
-     <Login/>
-    </>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
   )
 }
 

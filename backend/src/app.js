@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser"
 const app=express()
 
 app.use(cors({
-    origin:process.env.CORS_ORIGIN,
+    origin:"http://localhost:5173",
     credentials:true
 }))
 
@@ -23,7 +23,7 @@ import contestRoutes from './routes/contest.routes.js';
 
 //routes declaration
 app.use("/api/v1/users",userRouter);
-app.use('/api/v2/contests', contestRoutes);
+app.use('/api/v1/contests', contestRoutes);
 
 
 //http://localhost:8000/api/v1/users/register

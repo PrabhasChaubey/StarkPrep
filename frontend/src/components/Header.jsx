@@ -11,7 +11,12 @@ function Header() {
           </div>
 
           <div className='text-black font-semibold text-lg'>
-            <button className='rounded-3xl bg-amber-300 hover:bg-amber-400 px-3'>Login</button>
+            <button className='rounded-3xl bg-amber-300 hover:bg-amber-400 px-3'>
+              <Link to="/login">
+                Login
+              </Link>             
+                
+            </button>
           </div>
 
         </div>

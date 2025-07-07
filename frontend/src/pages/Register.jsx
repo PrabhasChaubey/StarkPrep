@@ -1,17 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DashBoard from '../components/DashBoard'
+import Header from '../components/Header';
+import { registerUser } from '../services/api'
 
 function Register() {
-    const handleSubmit = (e) => {
+    const [loading,setLoading]=useState(false);
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
-    const data = Object.fromEntries(formData.entries())
-    console.log(data) // Replace with actual API call
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await registerUser(formData);
+      console.log("Registered: ",res.data);
+      alert("User registered successfully")
+    } catch (err) {
+      console.error(err.response?.data || err);
+      setError(err.response?.data?.message || "User with email or username already exists");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <div className='min-h-screen bg-gray-900 text-white'>
-        <DashBoard/>
+        <Header/>
 
         {/* Centered Form */}
       <div className="flex items-center justify-center h-[calc(100vh-4rem)] px-4 my-10">
@@ -20,6 +36,13 @@ function Register() {
           className="bg-white text-black rounded-lg shadow-lg p-8 w-full max-w-md space-y-6"
         >
           <h2 className="text-2xl font-bold text-center text-gray-800">Create an Account</h2>
+
+           {/* Error message */}
+          {error && (
+            <div className="text-red-600 text-sm text-center">
+              {error}
+            </div>
+          )}
 
           <div>
             <label htmlFor="fullName" className="block mb-1 font-medium text-gray-700">
@@ -73,13 +96,16 @@ function Register() {
             />
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-amber-400 hover:bg-amber-500 text-black font-semibold py-2 rounded-md transition duration-200"
+            disabled={loading}
+            className="w-full bg-amber-400 hover:bg-amber-500 text-black font-semibold py-2 rounded-md transition duration-200 disabled:opacity-60"
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
+        
       </div>
 
     </div>

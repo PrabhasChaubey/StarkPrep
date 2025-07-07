@@ -18,8 +18,13 @@ function Landing() {
                 </p>
                 
                     <button className="bg-amber-300 text-black font-semibold px-6 py-2 rounded-full hover:bg-amber-400 transition duration-200">
-                        Get Started
+                        <Link to="/register">
+                            Get Started
+                        </Link>
+                        
                     </button>
+                
+                    
                 
                 <div className='flex justify-center'>
                 <img src='./public/coding.jpg'
