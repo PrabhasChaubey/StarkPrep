@@ -71,6 +71,12 @@ const userSchema = new Schema({
             medium: Number,
             hard: Number,
             },
+        ratingHistory: [
+          {
+            contestIndex: Number,
+            rating: Number,
+          },
+        ],
         }   
     }
 
