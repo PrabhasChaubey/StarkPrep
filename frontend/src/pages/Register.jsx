@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import DashBoard from '../components/DashBoard'
 import Header from '../components/Header';
 import { registerUser } from '../services/api'
+import { useNavigate } from 'react-router-dom'
 
 function Register() {
     const [loading,setLoading]=useState(false);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
     e.preventDefault()
@@ -17,6 +19,10 @@ function Register() {
       const res = await registerUser(formData);
       console.log("Registered: ",res.data);
       alert("User registered successfully")
+
+      // Redirect to login page
+      navigate("/login");
+
     } catch (err) {
       console.error(err.response?.data || err);
       setError(err.response?.data?.message || "User with email or username already exists");
@@ -27,6 +33,7 @@ function Register() {
 
   return (
     <div className='min-h-screen bg-gray-900 text-white'>
+      
         <Header/>
 
         {/* Centered Form */}
@@ -104,6 +111,11 @@ function Register() {
           >
             {loading ? "Registering..." : "Register"}
           </button>
+
+          <p className="text-sm text-center text-gray-600">
+            Already have an account? <a href="/login" className="text-amber-600 hover:underline">Login</a>
+          </p>
+
         </form>
         
       </div>

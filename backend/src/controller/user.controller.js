@@ -513,7 +513,7 @@ export const fetchLeetcodeStats = asyncHandler(async (req, res) => {
     await page.setViewport({ width: 1280, height: 800 });
     await page.goto(profileUrl, {
       waitUntil: "networkidle2",
-      timeout: 20000,
+      timeout: 10000,
     });
 
     // Contest rating
@@ -555,38 +555,38 @@ export const fetchLeetcodeStats = asyncHandler(async (req, res) => {
 
     // Step: Scrape LeetCode Contest History Page
     //open profile page
-    const profilePage = await browser.newPage();
-    await profilePage.goto(`https://leetcode.com/${username}/`, {
-      waitUntil: "networkidle2",
-      timeout: 30000,
-    });
+    //const profilePage = await browser.newPage();
+    // await profilePage.goto(`https://leetcode.com/${username}/`, {
+    //   waitUntil: "networkidle2",
+    //   timeout: 10000,
+    // });
 
     //wait for graph to load
-    await profilePage.waitForSelector(".rating-contest-graph path.highcharts-graph", { timeout: 20000 });
+    //await profilePage.waitForSelector(".rating-contest-graph path.highcharts-graph", { timeout: 20000 });
 
 
     //Extract d attribute from <path>
-    const ratingGraphPoints = await profilePage.$eval(".rating-contest-graph path.highcharts-graph", (path) => {
-        const d = path.getAttribute("d");
-        const matches = d.match(/(?:M|L)\s*([\d.]+)\s+([\d.]+)/g); // Matches "M x y" or "L x y"
-        return matches.map((point, index) => {
-          const [x, y] = point.slice(1).trim().split(/\s+/).map(Number); // Remove "M"/"L"
-          return { contestIndex: index + 1, x, y };
-        });
-      });
+    // const ratingGraphPoints = await profilePage.$eval(".rating-contest-graph path.highcharts-graph", (path) => {
+    //     const d = path.getAttribute("d");
+    //     const matches = d.match(/(?:M|L)\s*([\d.]+)\s+([\d.]+)/g); // Matches "M x y" or "L x y"
+    //     return matches.map((point, index) => {
+    //       const [x, y] = point.slice(1).trim().split(/\s+/).map(Number); // Remove "M"/"L"
+    //       return { contestIndex: index + 1, x, y };
+    //     });
+    //   });
 
     //Convert Y-coordinate to Ratings
-    const yMin = 10;   // approx. top y (higher rating)
-    const yMax = 70;   // approx. bottom y (lower rating)
-    const ratingMin = 1400;
-    const ratingMax = 1900;
+    // const yMin = 10;   // approx. top y (higher rating)
+    // const yMax = 70;   // approx. bottom y (lower rating)
+    // const ratingMin = 1400;
+    // const ratingMax = 1900;
 
-    const ratingHistory = ratingGraphPoints.map(({ contestIndex, x, y }) => {
-      const rating = Math.round(
-        ratingMax - ((y - yMin) / (yMax - yMin)) * (ratingMax - ratingMin)
-      );
-      return { contestIndex, rating };
-    });
+    // const ratingHistory = ratingGraphPoints.map(({ contestIndex, x, y }) => {
+    //   const rating = Math.round(
+    //     ratingMax - ((y - yMin) / (yMax - yMin)) * (ratingMax - ratingMin)
+    //   );
+    //   return { contestIndex, rating };
+    // });
 
 
 
@@ -598,7 +598,7 @@ export const fetchLeetcodeStats = asyncHandler(async (req, res) => {
         "profileStats.leetcode.contestRating": contestRating,
         "profileStats.leetcode.attendedContestsCount": attendedContestsCount,
         "profileStats.leetcode.submissionStats": { easy, medium, hard },
-        "profileStats.leetcode.ratingHistory": ratingHistory,
+        //"profileStats.leetcode.ratingHistory": ratingHistory,
       },
     });
 
@@ -611,7 +611,7 @@ export const fetchLeetcodeStats = asyncHandler(async (req, res) => {
           contestRating,
           attendedContestsCount,
           submissionStats: { easy, medium, hard },
-          ratingHistory,
+          //ratingHistory,
         },
         "Leetcode stats refreshed"
       )

@@ -39,7 +39,7 @@ function ContestTracker() {
           {contests.map((contest, idx) => (
             <div
               key={idx}
-              className="bg-gray-800 p-5 rounded-lg shadow-lg hover:shadow-xl transition-all border border-gray-700"
+              className="bg-gray-800 p-5 rounded-lg shadow-lg hover:shadow-xl transition-all border border-gray-700 mx-2 mb-1"
             >
               <div className="flex justify-between items-center mb-2">
                 <h2 className="text-xl font-semibold text-white">{contest.name}</h2>

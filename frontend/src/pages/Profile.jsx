@@ -3,6 +3,7 @@ import DashBoard from '../components/DashBoard'
 import axios from 'axios';
 import { fetchCurrentUser,refreshCodeforcesStats,refreshLeetcodeStats } from '../services/api';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import DashBoardProfile from '../components/DashBoardProfile';
 
 function Profile() {
     const [userData, setUserData] = useState(null);
@@ -81,7 +82,7 @@ const cfTitle = getCodeforcesTitle(currentRating);
     <div className='p-1.5 lg:p-2.5 min-h-screen bg-black text-white'>
 
         <div className='h-16'>
-            <DashBoard/>
+            <DashBoardProfile/>
         </div>
 
         {/* Total questions and contets div */}
