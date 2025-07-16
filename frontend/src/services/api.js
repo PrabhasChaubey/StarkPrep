@@ -26,6 +26,24 @@ export const loginUser = (payload) => {
   return axiosInstanceV1.post("/users/login", payload);
 };
 
+// ✅ Fetch current logged-in user with full profileStats
+export const fetchCurrentUser = async () => {
+  const res = await axiosInstanceV1.get("/users/current-user");
+  return res.data.data; // this is `req.user`
+};
+
+// Codeforces refresh
+export const refreshCodeforcesStats = async (handle) => {
+  return axiosInstanceV1.post('/users/verify/cf', { handle });
+};
+
+// Leetcode refresh
+export const refreshLeetcodeStats = async () => {
+  return axiosInstanceV1.get('/users/leetcode/stats');
+};
+
+
+
 // Contest API
 export const fetchContests = async () => {
   const res = await axiosInstanceV4.get("/contests/upcoming");

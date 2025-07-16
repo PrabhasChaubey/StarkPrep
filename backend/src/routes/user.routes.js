@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { registerUser,loginUser,logoutUser,refreshAccessToken,changeCurrentPassword,getCurrentUser, updateAccountDetails,verifyCodeforcesProfile, initiateLeetcodeVerification,verifyLeetcodeProfile} from '../controller/user.controller.js';
+import { registerUser,loginUser,logoutUser,refreshAccessToken,changeCurrentPassword,getCurrentUser, updateAccountDetails,verifyCodeforcesProfile, initiateLeetcodeVerification,verifyLeetcodeProfile,fetchLeetcodeStats} from '../controller/user.controller.js';
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -35,6 +35,8 @@ router.post("/verify/cf", verifyJWT, verifyCodeforcesProfile);
 router.post("/leetcode/initiate-verification",initiateLeetcodeVerification)
 
 router.route("/leetcode/verify").post(verifyJWT, verifyLeetcodeProfile);
+
+router.get("/leetcode/stats", verifyJWT, fetchLeetcodeStats);
 
 
 export default router

@@ -6,7 +6,7 @@ function DashBoard() {
     <header className="fixed top-0 left-0 w-full h-14 bg-gray-950 shadow-sm z-50">
         <div className='flex justify-between items-center h-full w-full px-4'>
 
-            <div className='text-xl font-semibold text-amber-300'>
+            <div className='text-xl font-semibold text-purple-700'>
             StarkPrep
             </div >
 

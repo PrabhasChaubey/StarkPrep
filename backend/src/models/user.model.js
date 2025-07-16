@@ -48,11 +48,17 @@ const userSchema = new Schema({
         codeforces: {
             verified: { type: Boolean, default: false },
             handle: { type: String, default: "" },
-            totalContests: Number,
-            rating: Number,
-            maxRating: Number,
-            problemsSolved: Number,
+            totalContests: { type: Number, default: 0 },
+            rating: { type: Number, default: 0 },
+            maxRating: { type: Number, default: 0 },
+            problemsSolved: { type: Number, default: 0 },
             problemTags: [String],
+            ratingHistory: [{
+                contestName: String,
+                rating: Number,
+                rank: Number,
+                timestamp: Number
+            }]
         },
     leetcode: {
         verified: { type: Boolean, default: false },

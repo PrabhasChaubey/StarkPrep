@@ -1,17 +1,42 @@
-import React from 'react'
+import {useState} from 'react'
 import DashBoard from '../components/DashBoard'
 import Header from '../components/Header'
+import { loginUser } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    const handleSubmit = (e) => {
+     const [loading, setLoading] = useState(false);
+     const navigate = useNavigate();
+
+
+    const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data); // Replace with API call
+    const payload = Object.fromEntries(formData.entries());
+    setLoading(true);
+
+    try {
+      const res = await loginUser(payload);
+      console.log("Login successful", res.data);
+      alert("Login successful!");
+      // Redirect to Profile page
+      navigate('/profile');
+    } catch (err) {
+      const status = err.response?.status;
+      if (status === 404) {
+        alert("User not found. Please register first.");
+      } else if (status === 401) {
+        alert("Invalid credentials. Please try again.");
+      } else {
+        alert("Login failed. Something went wrong.");
+      }
+      console.error("Login error:", err.response?.data || err);
+    }
   };
 
   return (
     <div className='min-h-screen bg-gray-900 text-white'>
+
         <Header/>
 
         <div className="flex items-center justify-center h-[calc(100vh-4rem)] px-4">
@@ -48,10 +73,10 @@ function Login() {
           </div>
 
           <button
-            type="submit"
+            type="submit" disabled={loading}
             className="w-full bg-amber-400 hover:bg-amber-500 text-black font-semibold py-2 rounded-md transition duration-200"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
         </div>
