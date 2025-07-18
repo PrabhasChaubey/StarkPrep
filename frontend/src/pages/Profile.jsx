@@ -4,6 +4,8 @@ import axios from 'axios';
 import { fetchCurrentUser,refreshCodeforcesStats,refreshLeetcodeStats } from '../services/api';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import DashBoardProfile from '../components/DashBoardProfile';
+import { PieChart, Pie, Cell, Legend } from 'recharts';
+
 
 function Profile() {
     const [userData, setUserData] = useState(null);
@@ -70,16 +72,44 @@ function Profile() {
   if (rating < 3000) return "International Grandmaster";
   return "Legendary Grandmaster";
 };
+
+    //Extracting Codeforces data
     const codeforcesStats = userData?.profileStats?.codeforces;
-const currentRating = codeforcesStats?.rating || 0;
-const maxRating = codeforcesStats?.maxRating || 0;
-const problemsSolved = codeforcesStats?.problemsSolved || 0;
-const cfTitle = getCodeforcesTitle(currentRating);
+    const currentRating = codeforcesStats?.rating || 0;
+    const maxRating = codeforcesStats?.maxRating || 0;
+    const problemsSolved = codeforcesStats?.problemsSolved || 0;
+    const cfTitle = getCodeforcesTitle(currentRating);
+    const leetcodeStats = userData?.profileStats?.leetcode;
 
+    //Extracting Leetcode data
+    const lcRating = leetcodeStats?.contestRating || 0;
+    const lcContests = leetcodeStats?.attendedContestsCount || 0;
+    const lcTotalSolved = leetcodeStats?.totalProblemsSolved || 0;
+    const lcEasy = leetcodeStats?.submissionStats?.easy || 0;
+    const lcMedium = leetcodeStats?.submissionStats?.medium || 0;
+    const lcHard = leetcodeStats?.submissionStats?.hard || 0;
 
+    const getLeetCodeTitle = (rating) => {
+        if (rating >= 2200) return "Legendary";
+        if (rating >= 1850) return "Guardian";
+        return "None";
+    };
 
+    const leetcodeTitle = getLeetCodeTitle(lcRating);
+
+    //Creating Pie Chart of leetcode easy,medium and hard
+    const pieData = [
+    { name: 'Easy', value: lcEasy },
+    { name: 'Medium', value: lcMedium },
+    { name: 'Hard', value: lcHard }
+    ];
+
+    const COLORS = ['#4ade80', '#facc15', '#f87171']; // Green, Yellow, Red
+
+    
   return (
-    <div className='p-1.5 lg:p-2.5 min-h-screen bg-black text-white'>
+
+    <div className='p-1.5 lg:p-2.5 min-h-full bg-black text-white'>
 
         <div className='h-16'>
             <DashBoardProfile/>
@@ -120,7 +150,9 @@ const cfTitle = getCodeforcesTitle(currentRating);
         </div>
         {/* Completed */}
 
-        {/* Rating graph and stats div */}
+
+
+        {/* Rating graph and stats div for codeforces */}
         <div className='flex space-x-2 h-80 bg-black my-3'>
 
             <div className='w-2/3 lg:w-1/2 bg-fuchsia-800 ml-2 rounded-2xl'>
@@ -156,7 +188,7 @@ const cfTitle = getCodeforcesTitle(currentRating);
             <div className='w-1/3 flex flex-col lg:w-1/2 bg-fuchsia-800 mr-2 rounded-2xl'>
 
                     <div className='flex justify-center mt-1'>
-                        <h2 className='text-2xl font-bold mb-4 text-gray'>Codeforces Stats:
+                        <h2 className='text-2xl font-bold mb-4 text-gray'>Codeforces Stats
                         </h2>
                     </div>
                     <div className='flex flex-col p-2 bg-black rounded-2xl h-full mx-1 my-1 text-gray-700'>
@@ -173,7 +205,7 @@ const cfTitle = getCodeforcesTitle(currentRating);
                             
                         </div>
                         <div className='h-1/4 w-full mt-2'>
-                            <p className='text-2xl'> Rankings : {cfTitle}</p>
+                            <p className='text-2xl'> Title : {cfTitle}</p>
                             
                         </div>
                         
@@ -181,7 +213,100 @@ const cfTitle = getCodeforcesTitle(currentRating);
 
             </div>
         </div>
-        {/* Conpleter */}
+        {/* Conpleted */}
+
+
+
+        {/* Leetcode stats */}
+        <div className='h-70 bg-fuchsia-700 mx-2 my-2 mt-4 rounded-2xl flex flex-col mb-2'>
+
+            <div className='p-2 flex justify-center'>
+                <p className='text-2xl text-bold'>Leetcode Stats                    
+                </p>
+            </div>
+
+            <div className='bg-amber-300 h-full rounded-2xl flex'>
+
+                <div className='bg-gray-800 w-1/3 h-full rounded-2xl flex flex-col'>
+                    <div className='flex justify-center my-1'>
+                        <h1 className='text-xl'>
+                        Contest Stats
+                        </h1>
+                    </div>
+                    <div className='h-1/3 mx-1 flex justify-center'>
+                        <p1>
+                            Contest Rating : {lcRating}
+                        </p1>
+                        
+                    </div>
+                    <div className='h-1/3 mx-1 flex justify-center'>
+                        
+                        <p1>
+                            Total Attended : {lcContests}
+                        </p1>
+                        
+                    </div>
+                    <div className='h-1/3 mx-1 flex justify-center'>
+                        <p1>
+                            Title : {leetcodeTitle}
+                        </p1>
+                        
+                    </div>
+                    
+                </div>
+
+
+                <div className='bg-gray-800 w-2/3 h-full rounded-2xl mx-1 flex flex-col'>
+                    
+                    <div className='flex justify-center my-1'>
+                        <h1 className='text-xl'>
+                        Problem Stats
+                        </h1>
+                   </div>
+
+
+                    <div className='flex h-full'>
+
+                        <div className='flex flex-col jusitfy-center w-1/2'>
+                            <div className='h-1/4 mx-1 flex justify-center'>
+                                Total Problems : {lcTotalSolved}
+                            </div>
+                            <div className='h-1/4 mx-1 flex justify-center'>
+                                Easy :{lcEasy}
+                            </div>
+                            <div className='h-1/4 mx-1 flex justify-center'>
+                                Medium :{lcMedium}
+                            </div>
+                            <div className='h-1/4 mx-1 flex justify-center'>
+                                Hard :{lcHard}
+                            </div>
+                        </div>
+
+                        <div className='bg-gray-800 w-1/2 h-full rounded-2xl flex flex-col items-center justify-center text-white'>
+                            
+                            <PieChart width={250} height={200}>
+                                <Pie
+                                data={pieData}
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={70}
+                                label
+                                dataKey="value"
+                                >
+                                {pieData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                                </Pie>
+                                <Legend />
+                            </PieChart>
+                        </div>
+
+                    </div>
+                        
+                </div>                   
+            </div>
+
+        </div>
 
     </div>
   )
