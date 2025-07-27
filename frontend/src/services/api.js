@@ -50,7 +50,7 @@ export const fetchContests = async () => {
   return res.data.data;
 };
 
-
+//update profile
 export const updateProfile = async (formData) => {
   const res = await axiosInstanceV1.patch('/users/update-profile-info', formData, {
     headers: {
@@ -58,5 +58,18 @@ export const updateProfile = async (formData) => {
     },
   });
   return res.data;
+};
+
+
+// Step 1: Get Leetcode token
+export const initiateLeetcodeVerification = async () => {
+  const res = await axiosInstanceV1.post("/users/leetcode/initiate-verification");
+  return res.data.data; // returns { token }
+};
+
+// Step 2: Verify Leetcode handle using token
+export const verifyLeetcodeProfile = async (payload) => {
+  const res = await axiosInstanceV1.post("/users/leetcode/verify", payload);
+  return res.data.data; // returns verification status
 };
 

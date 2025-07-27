@@ -5,7 +5,7 @@ import { Routes,Route } from 'react-router-dom'
 import ContestTracker from './pages/ContestTracker.jsx'
 import Profile from './pages/Profile.jsx'
 import EditProfile from './pages/EditProfile.jsx'
-//import VerifyHandles from './pages/VerifyHandles.jsx'
+import VerifyHandles from './pages/VerifyHandles.jsx'
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
       <Route path="/contest-tracker" element={<ContestTracker/>}/>
       <Route path="/profile" element={<Profile/>}/>
       <Route path="/edit-profile" element={<EditProfile/>}/>
-      {/* <Route path="/verify-handles" element={<VerifyHandles/>}/> */}
+      <Route path="/verify-handles" element={<VerifyHandles/>}/>
 
     </Routes>
   )
