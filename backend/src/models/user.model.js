@@ -31,19 +31,13 @@ const userSchema = new Schema({
         required: [true, "Password is required"],
     },
 
-  // Optional fields you can use later
+  
     profileHandles: {
         leetcode: { type: String, default: '' },
         codeforces: { type: String, default: '' },
         github: { type: String, default: '' },
     },
-
-    //Optional
-    avatar: {
-        type: String, // image URL (optional)
-        default: '',
-    },
-    
+  
     profileStats: {
         codeforces: {
             verified: { type: Boolean, default: false },
@@ -60,25 +54,34 @@ const userSchema = new Schema({
                 timestamp: Number
             }]
         },
-    leetcode: {
-        verified: { type: Boolean, default: false },
-        username: { type: String, default: "" },
-        totalProblemsSolved: Number,
-        contestRating: Number,
-        attendedContestsCount: Number,
-        submissionStats: {
-            easy: Number,
-            medium: Number,
-            hard: Number,
-            },
-        // ratingHistory: [
-        //   {
-        //     contestIndex: Number,
-        //     rating: Number,
-        //   },
-        // ],
+        leetcode: {
+            verified: { type: Boolean, default: false },
+            username: { type: String, default: "" },
+            totalProblemsSolved: Number,
+            contestRating: Number,
+            attendedContestsCount: Number,
+            submissionStats: {
+                easy: Number,
+                medium: Number,
+                hard: Number,
+                },
+           
         }   
+    },
+
+    avatar: {
+        type: String, // image URL (optional)
+        default: '',
+    },
+    bio: {
+        type: String,
+        default: ""
+    },
+    collegeName: {
+        type: String,
+        default: ""
     }
+
 
 }, {
   timestamps: true,

@@ -625,6 +625,44 @@ export const fetchLeetcodeStats = asyncHandler(async (req, res) => {
 });
 
 
+export const updateProfileInfo = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { bio, collegeName } = req.body;
+        let avatarUrl;
+
+        if (req.file) {
+            const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
+            if (cloudinaryResponse) {
+                avatarUrl = cloudinaryResponse.secure_url;
+            }
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {
+                ...(bio !== undefined && { bio }),
+                ...(collegeName !== undefined && { collegeName }),
+                ...(avatarUrl && { avatar: avatarUrl })
+            },
+            { new: true }
+        ).select("-password");
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user: updatedUser
+        });
+
+    } catch (error) {
+        console.error("Update profile info error:", error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
 
 export {
     registerUser,
@@ -634,5 +672,5 @@ export {
     changeCurrentPassword,
     getCurrentUser,
     updateAccountDetails,
-    verifyCodeforcesProfile
+    verifyCodeforcesProfile,
 }

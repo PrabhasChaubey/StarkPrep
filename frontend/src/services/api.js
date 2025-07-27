@@ -49,3 +49,14 @@ export const fetchContests = async () => {
   const res = await axiosInstanceV4.get("/contests/upcoming");
   return res.data.data;
 };
+
+
+export const updateProfile = async (formData) => {
+  const res = await axiosInstanceV1.patch('/users/update-profile-info', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res.data;
+};
+

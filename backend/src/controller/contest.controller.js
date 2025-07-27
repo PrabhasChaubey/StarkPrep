@@ -37,6 +37,17 @@ export const getUpcomingContests = asyncHandler(async (req, res) => {
 
   const url = `https://clist.by/api/v2/contest/?username=prabhaschaubey&api_key=0765b39c45aec997be8776fa0f273c8748f6212d`;
 
+  // const { data } = await axios.get(url, {
+  // headers: {
+  //   Accept: "application/json"
+  // },
+  // params: {
+  //   start__gt: new Date().toISOString(), // contests after now
+  //   order_by: "start",
+  //   limit: 100
+  // }
+  //   });
+
   const { data } = await axios.get(url, {
   headers: {
     Accept: "application/json"
@@ -46,7 +57,8 @@ export const getUpcomingContests = asyncHandler(async (req, res) => {
     order_by: "start",
     limit: 100
   }
-    });
+});
+
 
   const filtered = data.objects.filter(contest =>
     ["leetcode.com", "codeforces.com"].includes(contest.resource)
